@@ -22,11 +22,13 @@ export class {
     dataDeEntrega: Date
 
    @ManyToOne(() => UsuariosModel (usuariosModel) => usuariosModel.tarefas)
-    usuarioId:
+    usuarioId: UsuariosModel
 
-    constructor(){
-
-
+    constructor(titulo: string, descricao: string, status: string, dataDeEntrega: Date){
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.status = status;
+        this.dataDeEntrega =dataDeEntrega;
     }
   
 }
