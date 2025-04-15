@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 
 @Entity()
-export class {
+export class UsuariosModel{
 
     @PrimaryGeneratedColumn()
     id!: number;
