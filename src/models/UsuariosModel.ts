@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany} from "typeorm";
 import bcrypt from "bcryptjs";
+import { TarefaModel } from "./TarefaModel";
+import { TarefaRepository } from "../repositories/TarefaRepository";
 
 
 @Entity()
@@ -19,6 +21,9 @@ export class UsuariosModel{
 
     @Column({type: "date"})
     dataDeCriacao: Date
+
+    @OneToMany(() => TarefaModel, (tarefa) => tarefa.userId)
+    usuarioModel!:string;
 
     constructor(name: string, email: string, password: string, dataDeCriacao: Date){
         this.name = name

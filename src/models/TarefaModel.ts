@@ -4,7 +4,7 @@ import { UsuariosModel } from "./UsuariosModel";
 
 
 @Entity()
-export class {
+export class TarefaModel{
 
     @PrimaryGeneratedColumn()
     id!: number;
@@ -21,8 +21,10 @@ export class {
     @Column({type: "date"})
     dataDeEntrega: Date
 
-   @ManyToOne(() => UsuariosModel (usuariosModel) => usuariosModel.tarefas)
-    usuarioId: UsuariosModel
+   @ManyToOne(() => UsuariosModel, (usuariosModel) => usuariosModel.id)
+   userId!: UsuariosModel
+
+   
 
     constructor(titulo: string, descricao: string, status: string, dataDeEntrega: Date){
         this.titulo = titulo;
