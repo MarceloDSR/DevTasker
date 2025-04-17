@@ -1,4 +1,4 @@
-// src/repositories/UserRepository.ts
+
 import { AppDataSource } from "../data-source";
 import { TarefaModel } from "../models/TarefaModel";
 
@@ -34,4 +34,4 @@ export class TarefaRepository {
   async findAllTarefas() {
     return await this.tarefaRepository.find({ relations: ["UsuariosModel", "TarefaModel"] });
   }
- }
+}
