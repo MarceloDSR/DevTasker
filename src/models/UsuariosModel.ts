@@ -1,36 +1,31 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany} from "typeorm";
-import bcrypt from "bcryptjs";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import { TarefaModel } from "./TarefaModel";
-import { TarefaRepository } from "../repositories/TarefaRepository";
 
 
 @Entity()
-export class UsuariosModel{
+export class UsuariosModel {
 
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({type:"varchar", length: 100, nullable: false })
+    @Column({ type: "varchar", length: 100, nullable: false })
     name: string;
-  
-    @Column({type:"varchar", length: 255, unique: true })
+
+    @Column({ type: "varchar", length: 255, unique: true })
     email: string;
-  
-    @Column({type:"varchar", length:255, nullable: false})
+
+    @Column({ type: "varchar", length: 255, nullable: false })
     password: string;
 
-    @Column({type: "date"})
-    dataDeCriacao: Date
+    @Column({ type: "timestamp" })
+    dataDeCriacao!: Date
 
-    @OneToMany(() => TarefaModel, (tarefa) => tarefa.userId)
-    usuarioModel!:string;
+    @OneToMany(() => TarefaModel, (tarefa: { userId: any; }) => tarefa.userId)
+    usuarioModel!: string;
 
-    constructor(name: string, email: string, password: string, dataDeCriacao: Date){
+    constructor(name: string, email: string, password: string) {
         this.name = name
         this.email = email
         this.password = password
-        this.dataDeCriacao = dataDeCriacao
-
     }
-  
 }
