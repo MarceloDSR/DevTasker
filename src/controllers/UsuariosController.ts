@@ -2,14 +2,16 @@ import { Request, Response } from "express";
 import { UserRepository } from "../repositories/UserRepository";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../auth";
+import { usuarioRepository } from "../repositories/UsuarioRepository";
 
+const repo = new usuarioRepository()
 
-export class UserController {
+export class UsuarioController {
 
   // 👤 Registro de novo usuário
   static async register(req: Request, res: Response) {
     try {
-      const { nome, email, senha, dataDeCriacao } = req.body;
+      const { nome, email, senha } = req.body;
 
       const existing = await repo.findUserByEmail(email);
       if (existing) {
@@ -17,7 +19,7 @@ export class UserController {
         return;
       }
 
-      const user = await repo.createUser(nome, email, senha, dataDeCriacao);
+      const user = await repo.createUsuario(nome, email, senha);
       res.status(201).json(user);
       return;
     } catch (error) {
@@ -37,13 +39,13 @@ export class UserController {
         return;
       }
 
-      const isValid = await bcrypt.compare(senha, user.senha);
+      const isValid = await bcrypt.compare(senha, user.password);
       if (!isValid) {
         res.status(401).json({ message: "Senha inválida." });
         return;
       }
 
-      const token = generateToken({ id: user.id, email: user.email, role: user.role });
+      const token = generateToken({ id: user.id, email: user.email});
 
       res.json({ message: "Login autorizado", token });
     } catch (error) {
@@ -54,7 +56,7 @@ export class UserController {
   // 📜 Buscar todos os usuários
   static async getAll(req: Request, res: Response) {
     try {
-      const users = await repo.findAllUsers();
+      const users = await repo.findAllUsuarios();
       res.json(users);
       return;
     } catch (error) {
@@ -67,7 +69,7 @@ export class UserController {
   static async getById(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
-      const user = await repo.findUserById(id);
+      const user = await repo.findUserByid(id);
       if (!user) {
         res.status(404).json({ message: "Usuário não encontrado." });
         return;
@@ -87,7 +89,7 @@ export class UserController {
       const { nome, email, senha, dataDeCriacao } = req.body;
 
       const fieldsToUpdate = { nome, email, senha, dataDeCriacao };
-      const updated = await repo.updateUser(id, fieldsToUpdate);
+      const updated = await repo.updateUsuario(id, fieldsToUpdate);
 
       if (!updated) {
         res.status(404).json({ message: "Usuário não encontrado." });
@@ -105,7 +107,7 @@ export class UserController {
   static async delete(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
-      const deleted = await repo.deleteUser(id);
+      const deleted = await repo.deleteUsuario(id);
 
       if (!deleted) {
         res.status(404).json({ message: "Usuário não encontrado." });
