@@ -10,13 +10,13 @@ export class TarefasController {
     try {
       const { titulo, descricao, status, dataDeEntrega, usuarioId } = req.body;
 
-      const tarefa = await repo.createTarefa({
+      const tarefa = await repo.createTarefa(
         titulo,
         descricao,
         status,
         dataDeEntrega,
         usuarioId
-      });
+      );
 
       res.status(201).json(tarefa);
     } catch (error) {
@@ -38,7 +38,7 @@ export class TarefasController {
   static async getById(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
-      const tarefa = await repo.findTarefaById(id);
+      const tarefa = await repo.findTaferaById(id);
 
       if (!tarefa) {
         res.status(404).json({ message: "Tarefa não encontrada." });
@@ -57,13 +57,9 @@ export class TarefasController {
       const id = parseInt(req.params.id);
       const { titulo, descricao, status, dataDeEntrega, usuarioId } = req.body;
 
-      const tarefaAtualizada = await repo.updateTarefa(id, {
-        titulo,
-        descricao,
-        status,
-        dataDeEntrega,
-        usuarioId
-      });
+      const fields = { titulo, descricao, status, dataDeEntrega, usuarioId }
+
+      const tarefaAtualizada = await repo.updateTarefa(id, fields);
 
       if (!tarefaAtualizada) {
         res.status(404).json({ message: "Tarefa não encontrada." });
