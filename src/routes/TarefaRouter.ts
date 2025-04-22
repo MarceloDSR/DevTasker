@@ -8,7 +8,7 @@ const middleware = new AuthMiddleware()
 const router = Router();
 
 router.post('/criarTarefa', TarefasController.create);
-router.post('/achar', TarefasController.);
-router.get('/users/', middleware.authenticateToken, TarefasController.create.getAll);
+router.post('/achar', TarefasController.getById);
+router.get('/users/', middleware.authenticateToken, TarefasController.getAll);
 
 export default router;
