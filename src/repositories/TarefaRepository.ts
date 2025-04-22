@@ -1,4 +1,3 @@
-
 import { AppDataSource } from "../data-source";
 import { TarefaModel } from "../models/TarefaModel";
 
