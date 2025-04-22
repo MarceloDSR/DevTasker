@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserRepository } from "../repositories/UserRepository";
+
 import bcrypt from "bcryptjs";
 import { generateToken } from "../auth";
 import { usuarioRepository } from "../repositories/UsuarioRepository";
