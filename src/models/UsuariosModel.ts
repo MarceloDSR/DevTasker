@@ -17,10 +17,10 @@ export class UsuariosModel {
     @Column({ type: "varchar", length: 255, nullable: false })
     password: string;
 
-    @Column({ type: "timestamp" })
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     dataDeCriacao!: Date
 
-    @OneToMany(() => TarefaModel, (tarefa: { userId: any; }) => tarefa.userId)
+    @OneToMany(() => TarefaModel, (tarefa) => tarefa.userId)
     usuarioModel!: string;
 
     constructor(name: string, email: string, password: string) {

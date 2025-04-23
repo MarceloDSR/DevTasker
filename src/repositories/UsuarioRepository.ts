@@ -35,7 +35,7 @@ export class usuarioRepository {
     }
 
     async findAllUsuarios() {
-        return await this.usuarioRepository.find({ relations: ["UsuariosModel", "TarefaModel"] });
+        return await this.usuarioRepository.find();
     }
 
 }

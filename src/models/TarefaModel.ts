@@ -24,8 +24,6 @@ export class TarefaModel{
    @ManyToOne(() => UsuariosModel, (usuariosModel) => usuariosModel.id)
    userId!: UsuariosModel
 
-   
-
     constructor(titulo: string, descricao: string, status: string, dataDeEntrega: Date){
         this.titulo = titulo;
         this.descricao = descricao;
