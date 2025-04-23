@@ -9,6 +9,6 @@ const router = Router();
 
 router.post('/register', UsuarioController.register);
 router.post('/login', UsuarioController.login);
-router.get('/users/', middleware.authenticateToken, UsuarioController.getAll);
+router.get('/users', middleware.authenticateToken, UsuarioController.getAll);
 
 export default router;

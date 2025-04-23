@@ -14,12 +14,16 @@ export class UsuarioController {
       const { nome, email, senha } = req.body;
 
       const existing = await repo.findUserByEmail(email);
+
       if (existing) {
-        res.status(400).json({ message: "Email já em uso." });
+        res.status(409).json({ message: "Email já em uso." });
         return;
       }
 
-      const user = await repo.createUsuario(nome, email, senha);
+      const salt = await bcrypt.genSalt(10);
+      const senhaHash = await bcrypt.hash(senha, salt)
+
+      const user = await repo.createUsuario(nome, email, senhaHash);
       res.status(201).json(user);
       return;
     } catch (error) {
@@ -45,7 +49,7 @@ export class UsuarioController {
         return;
       }
 
-      const token = generateToken({ id: user.id, email: user.email});
+      const token = generateToken({ id: user.id, email: user.email });
 
       res.json({ message: "Login autorizado", token });
     } catch (error) {
@@ -57,7 +61,13 @@ export class UsuarioController {
   static async getAll(req: Request, res: Response) {
     try {
       const users = await repo.findAllUsuarios();
-      res.json(users);
+
+      const usersWithoutPassword = users.map(user => {
+        const { password, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+      });
+
+      res.json(usersWithoutPassword);
       return;
     } catch (error) {
       res.status(500).json({ message: "Erro ao buscar usuários", details: error });

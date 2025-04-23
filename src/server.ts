@@ -10,7 +10,7 @@ app.use(express.json());
 app.use("/api", usuarioRouter);
 
 AppDataSource.initialize().then(() => {
-  app.listen(3306, () => console.log("Server is running on port 3306"));
+  app.listen(3000, () => console.log("Server is running on port 3000"));
 }).catch((error) => {
   console.log("Erro ao conectar ao banco de dados!", error)
 });
